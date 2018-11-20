@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t shermanng10/fib -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run shermanng10/fib npm test -- --coverage
+
+after_success:
+  - docker build -t shermanng10/multi-client ./client
+  - docker build -t shermanng10/multi-nginx ./nginx
+  - docker build -t shermanng10/multi-server ./server
+  - docker build -t shermanng10/multi-worker ./worker
+
+  # Login to docker hub
+  - echo "$DOCKER_PASSWORD" || docker login -u "$DOCKER_ID" --password-stdin
+  # Push images
+  - docker push shermanng10/multi-client
+  - docker push shermanng10/multi-nginx
+  - docker push shermanng10/multi-server
+  - docker push shermanng10/multi-worker
