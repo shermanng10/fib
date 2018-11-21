@@ -5,12 +5,14 @@
          "name": "client",
          "image": "shermanng10/multi-client",
          "hostname": "client",
-         "essential": "false"
+         "essential": "false",
+         "memory": 128
      },
      {
         "name": "nginx",
         "image": "shermanng10/multi-nginx",
         "essential": "true",
+        "memory": 128,
         "portMappings": [
             {
                 "hostPort": 80,
@@ -23,13 +25,15 @@
         "name": "server",
         "image": "shermanng10/multi-server",
         "hostname": "api",
-        "essential": "false"
+        "essential": "false",
+        "memory": 128
     },
     {
         "name": "worker",
         "image": "shermanng10/multi-worker",
         "hostname": "worker",
-        "essential": "false"
+        "essential": "false",
+        "memory": 128
     }
  ]   
 }
